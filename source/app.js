@@ -70,6 +70,10 @@ const actionButtonBehavior = {
     }
 }
 
+/**
+ * Picks the next note and generates the SVG of the notation. The `stage` container
+ * and the `problem_answer` variable is updated.
+ */
 function loadQuestion() {
     /* Pick random notes to show */
     let randomIndex = Math.floor(Math.random() * notesToDisplay.length);
@@ -89,7 +93,6 @@ function loadQuestion() {
     /* Render notation */
     let output = document.createElement('div');
     output.classList.add('fade-in');
-    stage.appendChild(output);
 
     const renderer = new Renderer(output, Renderer.Backends.SVG);
     renderer.resize(100, 200);
@@ -117,11 +120,13 @@ function loadQuestion() {
     // draw everything.
     voice.draw(context, (clefToDisplay == 'treble') ? staveTreble : staveBass);
 
-
+    /* Move everything to the stage. */
+    stage.appendChild(output);
 }
 
 
 function revealAnswer() {
+    /* Create element */
     let ans = document.createElement('span');
     ans.innerHTML = problem_answer;
     ans.id = 'answer-lettername';

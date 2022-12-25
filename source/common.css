@@ -18,7 +18,11 @@ footer {
 
 .flex-center {
     justify-content: center;
-    align-content: center;
+    align-items: center;
+}
+
+.fixed {
+    position: fixed;
 }
 
 .container {
