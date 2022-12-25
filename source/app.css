@@ -1,12 +1,38 @@
+body {
+    background: linear-gradient(132deg, #ffbbc4, #d3baff, #c9cfff);
+    background-size: 400% 400%;
+    animation: background-fade 30s infinite ease;
+}
+
+@keyframes background-fade {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
 #stage {
-    width: 100px;
+    width: 200px;
     height: 200px;
 
     align-items: center;
     gap: 20px;
+
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    margin: 10px
 }
 
 
 #answer-lettername {
     font-size: 2rem;
+}
+
+#btn-action {
+    height: 30px;
 }

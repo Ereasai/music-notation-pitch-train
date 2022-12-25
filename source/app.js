@@ -49,6 +49,7 @@ const actionButtonBehavior = {
         /* update the stage */
         clearStage();
         loadQuestion();
+        stage.classList.remove('flex-center');
         gameState = 'question';
         btnAction.innerText = "Show Answer";
     },
@@ -96,10 +97,10 @@ function loadQuestion() {
     const context = renderer.getContext();
 
     // create stave and draw.
-    const staveTreble = new Stave(STAVE_XOFFSET, 0,  STAVE_LENGTH);
+    const staveTreble = new Stave(STAVE_XOFFSET, 0,  STAVE_LENGTH, {fill_style: 'black'});
           staveTreble  .addClef("treble");
           staveTreble  .setContext(context).draw();
-    const staveBass   = new Stave(STAVE_XOFFSET, STAVE_BASS_XSTART, STAVE_LENGTH);
+    const staveBass   = new Stave(STAVE_XOFFSET, STAVE_BASS_XSTART, STAVE_LENGTH, {fill_style: 'black'});
           staveBass    .addClef("bass");
           staveBass    .setContext(context).draw();
 
