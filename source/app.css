@@ -1,0 +1,12 @@
+#stage {
+    width: 100px;
+    height: 200px;
+
+    align-items: center;
+    gap: 20px;
+}
+
+
+#answer-lettername {
+    font-size: 2rem;
+}
