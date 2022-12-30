@@ -56,16 +56,22 @@ const actionButtonBehavior = {
         }
 
         let prevProblem = problem_answer_num; // save this reference for piano.
-        /* Update the stage */
-        clearStage();
-        loadQuestion();
+
+        // get the stage ready.
+        removePianoFancyAnimation();
         stage.classList.remove('flex-center');
-        gameState = 'question';
-        btnAction.innerText = "Show Answer";
-        deselectKey(prevProblem);
-    },
 
+        // check the function `answer` to see the behavior from here.
+        actionButtonBehavior.answer();
+    }, 
 
+    /**
+     * When action button is pressed, the following things happen:
+     * 1. the answer to the current problem is revealed. 
+     * 2. the corresponding piano key is selected.
+     * 3. button inner text updated.
+     * 4. finally, the state changes to `answer`.
+     */
     question: () => {
         revealAnswer();
         gameState = 'answer';
@@ -73,7 +79,14 @@ const actionButtonBehavior = {
         selectKey(problem_answer_num);
     },
 
-
+    /**
+     * When action button is pressed, the following things happen:
+     * 1. if it exists, the piano key is deselected.
+     * 2. the stage is cleared.
+     * 3. new question is loaded.
+     * 4. button now displays `"Show Answer"`
+     * 5. finally, the state changes to `question`.
+     */
     answer: () => {
         deselectKey(problem_answer_num);
         clearStage();
@@ -182,7 +195,6 @@ function createPiano() {
         }
     }
 
-    // TODO: apply effects?
     applyPianoFancyAnimation();
 }
 
@@ -200,6 +212,7 @@ function applyPianoFancyAnimation() {
             }
             @keyframes key-intro-animation {
                 0% {
+                    background-color: red;
                     transform: translateY(20px);
                 }
                 100% {
@@ -210,6 +223,12 @@ function applyPianoFancyAnimation() {
         `;
         delay += deltaDelay;
         index++;
+    });
+}
+
+function removePianoFancyAnimation() {
+    pianoKeys.forEach(key => {
+       key.innerHTML = '';
     });
 }
 
