@@ -1,6 +1,6 @@
 
 /* VexFlow */
-const { Renderer, Stave, StaveNote, Voice, Formatter, Accidental, Beam } = Vex.Flow;
+const { Renderer, Stave, StaveNote, Voice, Formatter } = Vex.Flow;
 
 /* CONSTANTS */
 const STAVE_LENGTH      = 80;
@@ -208,22 +208,47 @@ function createPiano() {
     applyPianoFancyAnimation();
 }
 
+/**
+ * Applies a fancy animation on all of the piano keys.
+ * The animation is supposed to be a wave spawn effect. The lowest key appears
+ * first on the screen. The highest note appears last on the screen.
+ * Check `Spawn Animation ADR` for details of implementation.
+ */
 function applyPianoFancyAnimation() {
+    // definitions of delay, in ms.
+    const pauseLength = 200;
+    const deltaDelay = 10;
+    const animationLength = 500;
+
     let delay = 0;
-    let deltaDelay = 10;
     let index = 0;
     pianoKeys.forEach(key => {
         key.classList.add(`key-${index}`);
+        key.classList.add('animation-on');
+
+        let totalTime = pauseLength + delay + animationLength;
+        // keyframe where the animation should start.
+        let A = Math.round(100*((pauseLength + delay)/totalTime));
+        let randomTranslate = Math.round(Math.random() * 1000 - 500);
+        console.log(randomTranslate)
+
+
+
         key.innerHTML =
         `
+        <!--Fancy animation for introduction-->
+        <!--Will be removed when the game starts-->
         <style>
-            .key-${index} {
-                animation: key-intro-animation 300ms ease 1 ${delay}ms;
+            .animation-on.key-${index} {
+                animation: key-intro-animation-${index} ${totalTime}ms ease 1;
             }
-            @keyframes key-intro-animation {
+            @keyframes key-intro-animation-${index} {
                 0% {
-                    background-color: red;
-                    transform: translateY(20px);
+                    opacity: 0;
+                }
+                ${A}% {
+                    opacity: 0;
+                    transform: translateY(${randomTranslate}px) scale(2);
                 }
                 100% {
                     transform: translateY(0px);
@@ -236,9 +261,17 @@ function applyPianoFancyAnimation() {
     });
 }
 
+/**
+ * Removes the `innerHTML`. which should just be the inline style sheet.
+ * This might require a different implementation. For instance, 
+ * inside of `applyPianoFancyAnimation`, instead of using one class, we 
+ * can use two class identifiers, i.e. `key-{#}` and `animation-on`. Then,
+ * inside of `removePianoFancyAnimation` we have to simply remove the
+ * `animation-on` class.
+ */
 function removePianoFancyAnimation() {
     pianoKeys.forEach(key => {
-       key.innerHTML = '';
+       key.classList.remove('animation-on');
     });
 }
 
@@ -259,7 +292,7 @@ function createKey(classes) {
 
 /**
  * The given key index is deselected on the `piano` element.
- * @param {number} prevProblem 
+ * @param {number} keyIndex 
  */
 function deselectKey(keyIndex) {
     // if previous problem exists, clear that key on the piano.
@@ -269,6 +302,10 @@ function deselectKey(keyIndex) {
 }
 
 
+/**
+ * The given key index is selected on the `piano` element.
+ * @param {number} keyIndex 
+ */
 function selectKey(keyIndex) {
     if (keyIndex != null) {
         pianoKeys[keyIndex].classList.add('selected');
