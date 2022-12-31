@@ -10,6 +10,8 @@
     --black-key-width: 15px;
     --black-key-height: 60px;
 
+    --middle-c-color: rgb(255, 195, 85);
+
 }
 
 body {
@@ -20,11 +22,6 @@ body {
 
 #piano {
     background-color: var(--window-background);
-    /* might not be needed, the height/width of the keys can define the container for piano. */
-    /*
-    width: var(--piano-width);
-    height: var(--piano-height);
-    */
 
     gap: var(--piano-gap);
 
@@ -68,6 +65,10 @@ body {
 
 .key.selected {
     animation: key-selected 1s ease infinite;
+}
+
+.key.key-39 {
+    background-color: var(--middle-c-color);
 }
 
 @keyframes key-selected {

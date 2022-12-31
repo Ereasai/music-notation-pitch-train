@@ -14,6 +14,9 @@ let stage     = null;
 let piano     = null;
 let pianoKeys = [];
 
+/* CSS REFERENCE */
+let css_middleCColor;
+
 /* CONTROL */
 let notesToDisplay = [];
 let gameState = 'start';
@@ -27,10 +30,17 @@ document.addEventListener('DOMContentLoaded', init);
  * When all of DOM elements are loaded, get references, set events, etc.
  */
 function init() {
+    // get references
     btnAction = document.getElementById('btn-action');
     stage     = document.getElementById('stage');
     piano     = document.getElementById('piano');
 
+    // get css variables
+    let r = document.querySelector(':root');
+    let rs = getComputedStyle(r);
+    css_middleCColor = rs.getPropertyValue('--middle-c-color');
+
+    // assign function
     btnAction.addEventListener('click', () => {
         actionButtonBehavior[gameState]();
     });
@@ -55,7 +65,7 @@ const actionButtonBehavior = {
             patternIndex++;
         }
 
-        let prevProblem = problem_answer_num; // save this reference for piano.
+        // let prevProblem = problem_answer_num; // save this reference for piano.
 
         // get the stage ready.
         removePianoFancyAnimation();
